@@ -1,0 +1,45 @@
+State Space
+    96x96x3
+    Reduce to 96x10x4
+        Go to greyscale
+        Take the 96x5 pictures in front of the car
+        Take the last 4 frames
+
+Action Space
+    Left    [-.5, 0, .3]
+    Right   [.5,  0, .3]
+    Gas     [0,   1,  0]
+    Brake   [0,   0, .8]
+
+Rewards
+    -10 reward for leaving the track
+    + reward of velocity
+    + reward for track tile
+
+
+SARSA
+    Algorithm parameters: step size alpha
+    Initialize Q(s,a) for all state-action pairs arbitrarily
+    Loop for each episode:
+        Initialize S
+        Choose A from S using policy derived from Q
+        Loop for each step of episode:
+            Take action A, observe R, S'
+            Chose A' from S' using policy derived from Q
+            Q(S,A) <- Q(S,A) + alpha[R + gamma * Q(S',A') - Q(S,A)]
+            S <- S'
+            A <- A'
+        until S is terminal
+
+
+Q Learning
+    Algorithm parameters: step size alpha, small epsilon
+    Initialize Q(s,a) for all arbitrarily
+    Loop for each episode:
+        Initialize S
+        Loop for each step of episode:
+            Choose A from S using policy derived from Q
+            Take action A, observe R, S'
+            Q(S, A) <- Q(S, A) + alpha [R + gamma * max(Q(S', a) - Q(S, A)]
+            S <- s'
+        until S is terminal
